@@ -59,8 +59,8 @@ Fund managers were grouped into actionable tiers:
 - **Tier 2 (score >= 4):** Approach in 30–90 days — partial fit, requires tailored pitch
 - **Tier 3 (score < 4):** Monitor — low fit or limited access
 
-### 5. Approval-to-outreach automation (n8n + Notion)
-An [n8n workflow](06_n8n/workflow_eu_funding_tracker.json) automates the handoff from analysis to action. Fund managers are loaded into a Notion Research Database where CEO/COO can review and approve them. When a fund manager is approved, the workflow automatically creates an entry in an Outreach Tracker database and sends a branded email notification with fund details and next steps. See [`06_n8n/README.md`](06_n8n/README.md) for setup.
+### 5. Approval-to-outreach automation
+An n8n workflow automates the handoff from analysis to action. Fund managers are loaded into a project management database where leadership can review and approve them. When a fund manager is approved, the workflow automatically creates an entry in an Outreach Tracker and sends a branded email notification with fund details and next steps. The current implementation uses Notion, but the same approach can be adapted to Monday.com, ClickUp, Slack, Asana, or any platform with an API.
 
 ---
 
@@ -120,7 +120,7 @@ See [`INSIGHTS.md`](INSIGHTS.md) for the full analysis. Highlights:
 | [Strategic Recommendations](04_business_analysis/strategic_recommendations.md) | Leadership | Prioritized 30/60/90/180-day action plan |
 | [Gap Analysis](04_business_analysis/gap_analysis.md) | Strategy team | Where coverage is weak and what to do about it |
 | [Decision Framework](docs/decision_framework.md) | Any company | 7-step guide to determine EU funding eligibility |
-| [n8n Workflow](06_n8n/workflow_eu_funding_tracker.json) | Operations | Approval-to-outreach automation with Notion + email notifications |
+| n8n Workflow (in development) | Operations | Approval-to-outreach automation with email notifications — adaptable to Notion, Monday.com, ClickUp, etc. |
 
 ---
 
@@ -181,7 +181,6 @@ eu-funding-intermediaries-analysis/
 ├── 03_powerbi/                          ← Dashboard charts (Power BI + standalone)
 ├── 04_business_analysis/                ← Gap analysis + strategic recommendations
 ├── 05_analysis_reports/                 ← Executive summary, outreach tracker, pitch deck
-├── 06_n8n/                              ← Approval-to-outreach automation (n8n + Notion)
 └── docs/                                ← Methodology, data dictionary, decision framework
 ```
 
