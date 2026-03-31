@@ -1,0 +1,335 @@
+{
+  "name": "EU Funding — Approval to Outreach Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "databaseId": "YOUR_RESEARCH_DATABASE_ID",
+        "event": "pageUpdated",
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        }
+      },
+      "id": "node-1",
+      "name": "Watch Research Database",
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [240, 300],
+      "credentials": {
+        "notionApi": {
+          "id": "YOUR_NOTION_CREDENTIAL_ID",
+          "name": "EU Funding Automation"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.properties['Approval Status'].select.name }}",
+              "rightValue": "Approved",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "node-2",
+      "name": "Filter Approved Only",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "set-1",
+              "name": "fund_manager",
+              "value": "={{ $json.properties['Fund Manager'].title[0].plain_text }}",
+              "type": "string"
+            },
+            {
+              "id": "set-2",
+              "name": "country",
+              "value": "={{ $json.properties['Country'].select.name }}",
+              "type": "string"
+            },
+            {
+              "id": "set-3",
+              "name": "priority_tier",
+              "value": "={{ $json.properties['Priority Tier'].select.name }}",
+              "type": "string"
+            },
+            {
+              "id": "set-4",
+              "name": "fit_score",
+              "value": "={{ $json.properties['Fit Score'].number }}",
+              "type": "number"
+            },
+            {
+              "id": "set-5",
+              "name": "eif_commitment",
+              "value": "={{ $json.properties['EIF Commitment (EUR)'].number }}",
+              "type": "number"
+            },
+            {
+              "id": "set-6",
+              "name": "email",
+              "value": "={{ $json.properties['Email'].email }}",
+              "type": "string"
+            },
+            {
+              "id": "set-7",
+              "name": "phone",
+              "value": "={{ $json.properties['Phone'].phone_number }}",
+              "type": "string"
+            },
+            {
+              "id": "set-8",
+              "name": "website",
+              "value": "={{ $json.properties['Website'].url }}",
+              "type": "string"
+            },
+            {
+              "id": "set-9",
+              "name": "financial_product",
+              "value": "={{ $json.properties['Financial Product'].rich_text[0].plain_text }}",
+              "type": "string"
+            },
+            {
+              "id": "set-10",
+              "name": "source_page_url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "set-11",
+              "name": "program_name",
+              "value": "={{ $json.properties['Fund Manager'].title[0].plain_text }} — {{ $json.properties['Financial Product'].rich_text[0].plain_text }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "node-3",
+      "name": "Extract Fund Details",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "create",
+        "databaseId": "YOUR_OUTREACH_TRACKER_DATABASE_ID",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Program Name|title",
+              "title": "={{ $json.program_name }}"
+            },
+            {
+              "key": "Status|select",
+              "selectValue": "To Contact"
+            },
+            {
+              "key": "Priority Tier|select",
+              "selectValue": "={{ $json.priority_tier }}"
+            },
+            {
+              "key": "Fit Score|number",
+              "numberValue": "={{ $json.fit_score }}"
+            },
+            {
+              "key": "Country|select",
+              "selectValue": "={{ $json.country }}"
+            },
+            {
+              "key": "Contact Email|email",
+              "emailValue": "={{ $json.email }}"
+            },
+            {
+              "key": "Contact Phone|phone_number",
+              "phoneValue": "={{ $json.phone }}"
+            },
+            {
+              "key": "Website|url",
+              "urlValue": "={{ $json.website }}"
+            },
+            {
+              "key": "Created By Automation|checkbox",
+              "checkboxValue": true
+            },
+            {
+              "key": "Source Record|url",
+              "urlValue": "={{ $json.source_page_url }}"
+            }
+          ]
+        }
+      },
+      "id": "node-4",
+      "name": "Create Outreach Entry",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [960, 300],
+      "credentials": {
+        "notionApi": {
+          "id": "YOUR_NOTION_CREDENTIAL_ID",
+          "name": "EU Funding Automation"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "your-email@example.com",
+        "toEmail": "your-email@example.com",
+        "subject": "=New Approved Opportunity: {{ $json.fund_manager }}",
+        "emailType": "html",
+        "html": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\"><div style=\"background-color: #1B2A4A; padding: 20px; color: #FFFFFF; border-radius: 6px 6px 0 0;\"><h2 style=\"margin: 0; font-size: 18px;\">EU Funding Intermediaries Analysis</h2><p style=\"margin: 4px 0 0; font-size: 13px; color: #B87333;\">New Opportunity Approved</p></div><div style=\"padding: 24px; border: 1px solid #DCE1EB; border-top: none; border-radius: 0 0 6px 6px;\"><p style=\"margin: 0 0 16px; font-size: 14px; color: #333;\">A fund manager has been approved for outreach and added to the Outreach Tracker.</p><table style=\"width: 100%; border-collapse: collapse; font-size: 14px;\"><tr><td style=\"padding: 8px 12px; font-weight: bold; color: #1B2A4A; width: 40%;\">Fund Manager</td><td style=\"padding: 8px 12px;\">{{ $json.fund_manager }}</td></tr><tr style=\"background-color: #FAFBFC;\"><td style=\"padding: 8px 12px; font-weight: bold; color: #1B2A4A;\">Priority Tier</td><td style=\"padding: 8px 12px;\">{{ $json.priority_tier }}</td></tr><tr><td style=\"padding: 8px 12px; font-weight: bold; color: #1B2A4A;\">Fit Score</td><td style=\"padding: 8px 12px;\">{{ $json.fit_score }} / 10</td></tr><tr style=\"background-color: #FAFBFC;\"><td style=\"padding: 8px 12px; font-weight: bold; color: #1B2A4A;\">Country</td><td style=\"padding: 8px 12px;\">{{ $json.country }}</td></tr><tr><td style=\"padding: 8px 12px; font-weight: bold; color: #1B2A4A;\">EIF Commitment</td><td style=\"padding: 8px 12px;\">EUR {{ $json.eif_commitment }}</td></tr><tr style=\"background-color: #FAFBFC;\"><td style=\"padding: 8px 12px; font-weight: bold; color: #1B2A4A;\">Contact Email</td><td style=\"padding: 8px 12px;\">{{ $json.email }}</td></tr></table><div style=\"margin-top: 20px; padding: 12px; background-color: #F8F6F3; border-left: 4px solid #B87333; border-radius: 4px;\"><p style=\"margin: 0; font-size: 13px; color: #555;\"><strong>Next step:</strong> Open the Outreach Tracker in Notion to assign ownership and set a deadline.</p></div><p style=\"margin: 20px 0 0; font-size: 12px; color: #999;\">This notification was sent automatically by the EU Funding Intermediaries Analysis n8n workflow.</p></div></div>"
+      },
+      "id": "node-5",
+      "name": "Send Email Notification",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1200, 300],
+      "credentials": {
+        "smtp": {
+          "id": "YOUR_SMTP_CREDENTIAL_ID",
+          "name": "Email SMTP"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "node-6",
+      "name": "On Workflow Error",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [480, 520]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "err-1",
+              "name": "error_message",
+              "value": "={{ $json.execution.error.message }}",
+              "type": "string"
+            },
+            {
+              "id": "err-2",
+              "name": "error_node",
+              "value": "={{ $json.execution.lastNodeExecuted }}",
+              "type": "string"
+            },
+            {
+              "id": "err-3",
+              "name": "error_time",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "id": "node-7",
+      "name": "Log Error Details",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [720, 520]
+    }
+  ],
+  "connections": {
+    "Watch Research Database": {
+      "main": [
+        [
+          {
+            "node": "Filter Approved Only",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Approved Only": {
+      "main": [
+        [
+          {
+            "node": "Extract Fund Details",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Extract Fund Details": {
+      "main": [
+        [
+          {
+            "node": "Create Outreach Entry",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Outreach Entry": {
+      "main": [
+        [
+          {
+            "node": "Send Email Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On Workflow Error": {
+      "main": [
+        [
+          {
+            "node": "Log Error Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "EU Funding"
+    },
+    {
+      "name": "Notion"
+    },
+    {
+      "name": "Automation"
+    }
+  ],
+  "triggerCount": 1
+}

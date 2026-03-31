@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+.env/
+
+# OS
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary
+*.tmp
+temp_*
+
+# Binary source files (PDFs are the viewable versions on GitHub)
+05_analysis_reports/*.xlsx
+05_analysis_reports/*.pptx
+05_analysis_reports/*.py
+05_analysis_reports/*.png
+
+# Source PDFs (referenced by URL, not stored in repo)
+01_data/raw/eif_pdfs/
