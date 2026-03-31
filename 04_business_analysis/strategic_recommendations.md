@@ -38,7 +38,7 @@ Prioritized action plan based on the analysis of 12 EIF-backed financial interme
 - **Score:** 6/10 (Tier 2)
 - **Why:** Deep tech focus with energy transition and water treatment alignment. EUR 21M EIF commitment.
 - **Action:** Position solar projects as energy transition tech. Position desalination as water treatment innovation.
-- **Contact:** Via website or LinkedIn — Calle Sagasta 18, Madrid
+- **Contact:** Via website — Calle Sagasta 18, Madrid
 
 ### 2.3 Engage OXY Capital (Portugal Strategy)
 - **Score:** 5.5/10 (Tier 2)
@@ -60,7 +60,7 @@ Prioritized action plan based on the analysis of 12 EIF-backed financial interme
 - **Score:** 5/10 (Tier 2)
 - **Why:** Pan-European energy transition tech fund with photovoltaic focus. Spain, Italy coverage.
 - **Action:** Position solar projects for acquisition/development pipeline. Estimated initial capacity: 1,665 MWp.
-- **Contact:** Via website or LinkedIn — Madrid office
+- **Contact:** Via website — Madrid office
 
 ### 3.3 Explore NIAM for Infrastructure-Scale Projects
 - **Score:** 4/10 (Tier 2)

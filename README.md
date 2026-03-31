@@ -6,6 +6,8 @@
 **EIF intermediary list (PDF):** [InvestEU Equity Visibility Report](https://www.eif.org/files/calls/ieu-equity-visibility-report-financial-intermediaries.pdf)
 **Data collected:** March 2025
 
+**Key deliverables:** [Executive Summary (PDF)](05_analysis_reports/executive_summary.pdf) · [Pitch Deck (PDF)](05_analysis_reports/pitch_deck.pdf) · [Outreach Tracker (PDF)](05_analysis_reports/outreach_tracker.pdf)
+
 ---
 
 ## The Business Problem
@@ -49,6 +51,8 @@ Each fund manager was scored out of 10 using weighted criteria that reflect what
 | SDG alignment | 2 pts | Required by impact funds — determines eligibility |
 | Contact availability | 2 pts | Does the fund have publicly available contact channels beyond the portal listing? |
 | Geographic match | 1 pt | Preference for target countries and markets |
+
+**Why these weights?** Project fit carries the most weight (3 pts) because a fund that doesn't cover your sector is irrelevant regardless of its size. EIF commitment (2 pts) signals fund capacity and deployment readiness. SDG alignment (2 pts) is a hard requirement for impact funds — approaching without it is a non-starter. Contact availability (2 pts) determines whether outreach is even possible. Geography (1 pt) is the lightest because it's a preference, not a blocker — many funds invest cross-border. These weights should be adjusted based on each company's priorities; a company where geography is critical, for example, should increase that weight accordingly.
 
 ### 3. Gap analysis
 Identified where funding coverage is strong, weak, or absent — so management knows where to invest outreach effort and where alternative funding routes are needed.
